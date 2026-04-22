@@ -1,10 +1,54 @@
 ---
 name: jd-api-doc-skill
-description: 京东联盟API文档获取技能 - 从官方数据源获取API文档并生成层级字段表格，支持触发词自动激活、语义映射、SDK工作流集成
+description: 京东联盟API文档获取技能。当用户提到"京东联盟"、"jd.union"、"京东API"、"京东接口"、或任何京东联盟API名称（如jd.union.open.goods.query）时，必须使用此技能。当用户提到"转链"、"商品查询"、"精选"、"热销榜"、"订单查询"、"礼金"、"京粉"等京东联盟相关功能关键词时，也必须使用此技能。即使问题看似简单，也应先调用此技能获取准确的API文档信息。
 origin: virgokid
+version: 1.1.0
+triggers:
+  exact:
+    - jd.union.open.goods.query
+    - jd.union.open.goods.rank.query
+    - jd.union.open.goods.jingfen.query
+    - jd.union.open.order.row.query
+    - jd.union.open.promotion.bysubunionid.get
+    - jd.union.open.coupon.gift.get
+    - josCmsApiId
+  semantic:
+    - pattern: 转链|推广链接
+      api: promotion.bysubunionid.get
+    - pattern: 商品查询|搜索商品|商品搜索
+      api: goods.query
+    - pattern: 精选|京粉|优质商品
+      api: goods.jingfen.query
+    - pattern: 热销榜|排行榜|热卖
+      api: goods.rank.query
+    - pattern: 订单查询|订单|佣金查询
+      api: order.row.query
+    - pattern: 礼金|红包|京享礼金
+      api: coupon.gift.get
+    - pattern: 商品详情|SKU详情
+      api: goods.promotiongoodsinfo.query
+    - pattern: 类目|分类
+      api: category.goods.get
+    - pattern: 推广位|PID
+      api: position.query
+  general:
+    - 京东联盟接口
+    - 京东联盟有什么接口
+    - 京东API文档
+    - 京东联盟文档
+    - 京东联盟API
+  prefix:
+    - 京东联盟
+    - jd.union
+    - 京东API
+    - 京东接口
+priority: 100
+autoInvoke: true
 ---
 
 # jd-api-doc-skill
+
+> **自动触发**: 当用户输入包含 "京东联盟"、"jd.union"、"京东API"、"京东接口" 或语义关键词时，自动激活此技能
 
 > Fetch API documentation from JD Union official source (joshome.jd.com) and generate hierarchical field tables
 

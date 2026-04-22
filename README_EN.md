@@ -12,11 +12,60 @@ This skill enables automated fetching of JD Union API documentation directly fro
 
 **Key Features**:
 - 🔗 Direct access to official JD documentation API
-- 🎯 Semantic trigger word activation
+- 🎯 **Auto-trigger activation** - AI automatically recognizes trigger words
 - 📁 Local document caching in `api-docs/` directory
 - 📊 Recursive parsing of nested field structures
 - 📝 Generates hierarchical Markdown tables
 - 🔗 JD SDK workflow integration
+
+## ⚡ Auto-Trigger Mechanism (v1.1.0)
+
+This skill supports **automatic activation**. When user input matches the following rules, AI will automatically invoke this skill:
+
+### Trigger Rules
+
+| Category | Trigger Words | Example User Input |
+|----------|---------------|-------------------|
+| **Exact Match** | API names | `How to use jd.union.open.goods.query` |
+| **Semantic Match** | Feature keywords | `京东联盟转链怎么转` → Maps to promotion API |
+| **General Match** | List queries | `京东联盟有什么接口` → Generate API index |
+| **Prefix Match** | Topic keywords | `京东联盟...` / `jd.union...` |
+
+### Semantic Mapping Table
+
+| User Keyword | Auto-mapped API |
+|--------------|-----------------|
+| `转链` / `推广链接` | `promotion.bysubunionid.get` |
+| `商品查询` / `搜索商品` | `goods.query` |
+| `精选` / `京粉` | `goods.jingfen.query` |
+| `热销榜` / `排行榜` | `goods.rank.query` |
+| `订单查询` / `佣金查询` | `order.row.query` |
+| `礼金` / `京享礼金` | `coupon.gift.get` |
+
+### Configuration
+
+Trigger rules are defined in `plugin.json`:
+
+```json
+{
+  "triggers": {
+    "exact": ["jd.union.open.goods.query", ...],
+    "semantic": ["转链", "商品查询", ...],
+    "general": ["京东联盟接口", "京东联盟有什么接口"],
+    "prefix": ["京东联盟", "jd.union"]
+  },
+  "hooks": {
+    "PreResponse": [
+      {
+        "patterns": ["京东联盟", "jd\\.union", "转链", ...],
+        "action": "invoke_skill",
+        "skill": "jd-api-doc-skill:jd-api-doc-skill",
+        "priority": 100
+      }
+    ]
+  }
+}
+```
 
 ## Quick Start
 
@@ -122,14 +171,19 @@ See [SKILL.md](./SKILL.md) for complete documentation including:
 
 ```
 jd-api-doc-skill/
-├── README.md           # Chinese README (Main)
-├── README_EN.md        # English README
-├── SKILL.md            # Complete skill documentation
-├── jd-api-fetch.sh     # Executable script
-├── api-docs/           # Document cache
-│   ├── INDEX.md        # API list index
-│   └── *.md            # Cached API docs
-└── LICENSE             # MIT License
+├── .claude-plugin/
+│   ├── plugin.json         # Plugin config (with triggers)
+│   └── marketplace.json    # Marketplace config
+├── skills/
+│   └── jd-api-doc-skill/
+│       └── SKILL.md        # Skill definition
+├── README.md               # Chinese README (Main)
+├── README_EN.md            # English README
+├── jd-api-fetch.sh         # Executable script
+├── api-docs/               # Document cache
+│   ├── INDEX.md            # API list index
+│   └── *.md                # Cached API docs
+└── LICENSE                 # MIT License
 ```
 
 ## Contributing
@@ -142,6 +196,17 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## Changelog
+
+### v1.1.0 (2026-04-22)
+- ✨ Added `triggers` config with exact/semantic/general/prefix rules
+- ✨ Added `hooks.PreResponse` hook configuration
+- 📝 Added triggers to SKILL.md frontmatter
+- 📝 Updated README with auto-trigger documentation
+
+### v1.0.0 (2026-04-22)
+- 🎉 Initial release
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -152,5 +217,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Author**: Claude Code Agent
+**Author**: virgokid  
 **Last Updated**: 2026-04-22

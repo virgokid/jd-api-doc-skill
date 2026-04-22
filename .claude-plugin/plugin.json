@@ -1,6 +1,6 @@
 {
   "name": "jd-api-doc-skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "京东联盟API文档获取技能 - 从官方数据源获取API文档并生成层级字段表格",
   "author": {
     "name": "virgokid",
@@ -17,5 +17,74 @@
     "chinese",
     "ecommerce"
   ],
-  "skills": ["./skills/"]
+  "skills": ["./skills/"],
+  "triggers": {
+    "exact": [
+      "jd.union.open.goods.query",
+      "jd.union.open.goods.rank.query",
+      "jd.union.open.goods.jingfen.query",
+      "jd.union.open.order.row.query",
+      "jd.union.open.promotion.bysubunionid.get",
+      "jd.union.open.coupon.gift.get",
+      "josCmsApiId"
+    ],
+    "semantic": [
+      "转链",
+      "推广链接",
+      "商品查询",
+      "搜索商品",
+      "商品搜索",
+      "精选",
+      "京粉",
+      "优质商品",
+      "热销榜",
+      "排行榜",
+      "热卖",
+      "订单查询",
+      "佣金查询",
+      "礼金",
+      "红包",
+      "京享礼金",
+      "商品详情",
+      "SKU详情",
+      "类目",
+      "分类",
+      "推广位",
+      "PID"
+    ],
+    "general": [
+      "京东联盟接口",
+      "京东联盟有什么接口",
+      "京东API文档",
+      "京东联盟文档",
+      "京东联盟API"
+    ],
+    "prefix": [
+      "京东联盟",
+      "jd.union",
+      "京东API",
+      "京东接口"
+    ]
+  },
+  "hooks": {
+    "PreResponse": [
+      {
+        "description": "京东联盟API文档自动触发",
+        "patterns": [
+          "京东联盟",
+          "jd\\.union",
+          "京东API",
+          "京东接口",
+          "转链",
+          "商品查询",
+          "热销榜",
+          "礼金",
+          "京粉精选"
+        ],
+        "action": "invoke_skill",
+        "skill": "jd-api-doc-skill:jd-api-doc-skill",
+        "priority": 100
+      }
+    ]
+  }
 }

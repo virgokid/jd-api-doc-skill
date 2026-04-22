@@ -13,12 +13,61 @@
 **核心特性**:
 
 - 🔗 直接访问官方 JD 文档 API
-- 🎯 触发词自动激活
+- 🎯 **触发词自动激活** - 无需手动调用，AI 自动识别
 - 📁 文档缓存到本地目录
 - 📊 递归解析嵌套字段结构
 - 📝 生成层级 Markdown 表格
 - 🛠 处理边缘情况（未定义名称、多行描述）
 - 🔗 集成 JD SDK 工作流
+
+## ⚡ 自动触发机制（v1.1.0 新增）
+
+本技能支持**自动触发**，当用户输入匹配以下规则时，AI 会自动激活此技能：
+
+### 触发规则
+
+| 类别 | 触发词 | 示例用户输入 |
+|------|--------|--------------|
+| **精确匹配** | API 名称 | `jd.union.open.goods.query 怎么用` |
+| **语义匹配** | 功能关键词 | `京东联盟转链怎么转` → 自动映射到转链接口 |
+| **泛化匹配** | 列表查询 | `京东联盟有什么接口` → 生成 API 列表索引 |
+| **前缀匹配** | 主题关键词 | `京东联盟...` / `jd.union...` |
+
+### 语义映射表
+
+| 用户输入关键词 | 自动映射 API |
+|----------------|--------------|
+| `转链` / `推广链接` | `promotion.bysubunionid.get` |
+| `商品查询` / `搜索商品` | `goods.query` |
+| `精选` / `京粉` | `goods.jingfen.query` |
+| `热销榜` / `排行榜` | `goods.rank.query` |
+| `订单查询` / `佣金查询` | `order.row.query` |
+| `礼金` / `京享礼金` | `coupon.gift.get` |
+
+### 配置说明
+
+触发规则在 `plugin.json` 的 `triggers` 字段中定义：
+
+```json
+{
+  "triggers": {
+    "exact": ["jd.union.open.goods.query", ...],
+    "semantic": ["转链", "商品查询", ...],
+    "general": ["京东联盟接口", "京东联盟有什么接口"],
+    "prefix": ["京东联盟", "jd.union"]
+  },
+  "hooks": {
+    "PreResponse": [
+      {
+        "patterns": ["京东联盟", "jd\\.union", "转链", ...],
+        "action": "invoke_skill",
+        "skill": "jd-api-doc-skill:jd-api-doc-skill",
+        "priority": 100
+      }
+    ]
+  }
+}
+```
 
 ## 快速开始
 
@@ -134,14 +183,19 @@ api-docs/
 
 ```
 jd-api-doc-skill/
-├── README.md           # 中文说明（主文档）
-├── README_EN.md        # 英文说明
-├── SKILL.md            # Skill 定义文档
-├── jd-api-fetch.sh     # 执行脚本
-├── api-docs/           # 文档缓存目录
-│   ├── INDEX.md        # API 列表索引
-│   └── *.md            # 缓存的 API 文档
-└── LICENSE             # MIT 许可证
+├── .claude-plugin/
+│   ├── plugin.json         # 插件配置（含触发器）
+│   └── marketplace.json    # 市场配置
+├── skills/
+│   └── jd-api-doc-skill/
+│       └── SKILL.md        # Skill 定义文档
+├── README.md               # 中文说明（主文档）
+├── README_EN.md            # 英文说明
+├── jd-api-fetch.sh         # 执行脚本
+├── api-docs/               # 文档缓存目录
+│   ├── INDEX.md            # API 列表索引
+│   └── *.md                # 缓存的 API 文档
+└── LICENSE                 # MIT 许可证
 ```
 
 ## 贡献
@@ -154,6 +208,17 @@ jd-api-doc-skill/
 4. 推送到分支 (`git push origin feature/amazing-feature`)
 5. 创建 Pull Request
 
+## 更新日志
+
+### v1.1.0 (2026-04-22)
+- ✨ 新增 `triggers` 配置，支持精确/语义/泛化/前缀四种触发规则
+- ✨ 新增 `hooks.PreResponse` 钩子配置
+- 📝 SKILL.md frontmatter 增加 triggers 定义
+- 📝 更新 README 说明自动触发机制
+
+### v1.0.0 (2026-04-22)
+- 🎉 初始发布
+
 ## 许可证
 
 [MIT License](LICENSE)
@@ -164,5 +229,5 @@ jd-api-doc-skill/
 
 ---
 
-**作者**: Claude Code Agent
+**作者**: virgokid  
 **更新日期**: 2026-04-22
