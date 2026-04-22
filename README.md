@@ -1,112 +1,126 @@
-# JD Union API Documentation Skill
+# JD联盟API 文档技能
 
-> A Claude Code skill for fetching JD Union (京东联盟) API documentation from official sources and generating hierarchical Markdown tables.
+> 从京东联盟官方数据源 (joshome.jd.com) 获取 API 文档并生成层级字段表格
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Overview
+**中文** | **[English](./README_EN.md)**
 
-This skill enables automated fetching of JD Union API documentation directly from the official `joshome.jd.com` source. It parses JSON responses and generates comprehensive Markdown documentation with hierarchical field tables.
+## 概述
 
-**Key Features**:
-- 🔗 Direct access to official JD documentation API
-- 🎯 Semantic trigger word activation
-- 📁 Local document caching in `api-docs/` directory
-- 📊 Recursive parsing of nested field structures
-- 📝 Generates hierarchical Markdown tables
-- 🔗 JD SDK workflow integration
+本工具可自动从京东官方 `joshome.jd.com` 获取京东联盟 API 文档，解析 JSON 响应并生成带有层级字段表格的 Markdown 文档。
 
-## Quick Start
+**核心特性**:
 
-### Installation
+- 🔗 直接访问官方 JD 文档 API
+- 🎯 触发词自动激活
+- 📁 文档缓存到本地目录
+- 📊 递归解析嵌套字段结构
+- 📝 生成层级 Markdown 表格
+- 🛠 处理边缘情况（未定义名称、多行描述）
+- 🔗 集成 JD SDK 工作流
 
-**Option 1: Install via Claude Code Plugin (Recommended)**
+## 快速开始
+
+### 安装
+
+**方式一：通过 Claude Code Plugin 安装（推荐）**
 
 ```bash
-# Add the plugin repository (if using a GitHub repo)
-claude plugin marketplace add https://github.com/your-username/jd-api-doc-skill
+# 添加插件仓库
+claude plugin marketplace add https://github.com/virgokid/jd-api-doc-skill
 
-# Install the plugin
+# 安装插件
 claude plugin install jd-api-doc-skill
 
-# Enable the plugin
+# 启用插件
 claude plugin enable jd-api-doc-skill
 ```
 
-**Option 2: Manual Installation**
+**方式二：手动安装**
 
 ```bash
-# Clone and copy to Claude Code skills directory
-git clone https://github.com/your-username/jd-api-doc-skill.git
+# 克隆并复制到 Claude Code skills 目录
+git clone https://github.com/virgokid/jd-api-doc-skill.git
 cp -r jd-api-doc-skill ~/.claude/skills/
 ```
 
-After installation, the skill will be automatically activated when you mention keywords like:
+安装后，当你提到以下关键词时技能会自动激活：
 - `京东联盟接口` / `京东API文档` / `jd.union.open`
 - `商品查询` / `转链` / `精选` / `订单查询`
 - `josCmsApiId`
 
-**Option 3: Use as Standalone Tool**
+**方式三：作为独立工具使用**
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/jd-api-doc-skill.git
+# 克隆仓库
+git clone https://github.com/virgokid/jd-api-doc-skill.git
 cd jd-api-doc-skill
 
-# Make script executable
+# 添加执行权限
 chmod +x jd-api-fetch.sh
 ```
 
-### Basic Usage
+### 基本用法
 
 ```bash
-# Generate API list index
+# 生成 API 列表索引
 ./jd-api-fetch.sh --index
 
-# Fetch by short name
+# 按短名称获取
 ./jd-api-fetch.sh goods-query
 
-# Fetch by API ID
+# 按 API ID 获取
 ./jd-api-fetch.sh 15153
 
-# Force refresh existing document
+# 强制刷新已存在的文档
 ./jd-api-fetch.sh --force goods-query
 ```
 
-## Prerequisites
+## 前置条件
 
-- `curl` - for HTTP requests
-- `jq` - for JSON parsing (optional)
-- `node` - for recursive field parsing
+- `curl` - HTTP 请求
+- `jq` - JSON 解析（可选）
+- `node` - 递归字段解析
 
-## Trigger Words
+## 触发词
 
-The skill activates automatically when these keywords are detected:
+当提到以下关键词时，可激活此工具：
 
-| Category | Trigger Words |
-|----------|---------------|
-| Exact Match | `jd.union.open`, `josCmsApiId`, `京东联盟接口`, `京东API文档` |
-| Semantic | `商品查询` → goods.query, `转链` → promotion.bysubunionid.get, `精选` → goods.jingfen.query, `热销榜` → goods.rank.query, `订单查询` → order.row.query |
+| 类别 | 触发词 |
+|------|--------|
+| 精确匹配 | `jd.union.open`, `josCmsApiId`, `京东联盟接口`, `京东API文档` |
+| 语义匹配 | `商品查询` → goods.query, `转链` → promotion.bysubunionid.get, `精选` → goods.jingfen.query, `热销榜` → goods.rank.query, `订单查询` → order.row.query |
 
-## Documentation
+## 文档目录
 
-See [SKILL.md](./SKILL.md) for complete documentation including:
-- Trigger Word Mapping
-- Workflow Integration Hooks
-- Agent API Interfaces
-- Edge Cases & Solutions
+```
+api-docs/
+├── INDEX.md                    # API 列表索引
+├── jd.union.open.goods.query.md
+├── jd.union.open.goods.rank.query.md
+└── ...
+```
 
-## Common API IDs
+## 详细文档
 
-| API Name | josCmsApiId | Description |
-|----------|-------------|-------------|
-| `jd.union.open.goods.query` | 15153 | Keyword goods search |
-| `jd.union.open.goods.rank.query` | 21055 | Real-time hot sales |
-| `jd.union.open.goods.jingfen.query` | 15165 | Jingfen selection |
-| `jd.union.open.order.row.query` | 16108 | Order query |
-| `jd.union.open.promotion.bysubunionid.get` | 15157 | Convert link |
+参见 [SKILL.md](./SKILL.md) 获取完整文档，包括：
+- 触发词映射
+- 工作流集成钩子
+- Agent API 接口
+- 边缘情况处理
 
-## Output Example
+## 常用 API ID
+
+| API 名称 | josCmsApiId | 说明 |
+|----------|-------------|------|
+| `jd.union.open.goods.query` | 15153 | 关键词商品查询 |
+| `jd.union.open.goods.rank.query` | 21055 | 实时热销榜 |
+| `jd.union.open.goods.jingfen.query` | 15165 | 京粉精选 |
+| `jd.union.open.order.row.query` | 16108 | 订单查询 |
+| `jd.union.open.promotion.bysubunionid.get` | 15157 | 转链接口 |
+
+## 输出示例
 
 ```markdown
 | `couponInfo` | com.jd.union.CouponInfo | 是 | 优惠券信息 |
@@ -116,39 +130,39 @@ See [SKILL.md](./SKILL.md) for complete documentation including:
 | 　　　└ `discount` | Number | 是 | 券面额 |
 ```
 
-## File Structure
+## 文件结构
 
 ```
 jd-api-doc-skill/
-├── README.md           # This file
-├── README_CN.md        # Chinese README
-├── SKILL.md            # Complete skill documentation
-├── jd-api-fetch.sh     # Executable script
-├── api-docs/           # Document cache
-│   ├── INDEX.md        # API list index
-│   └── *.md            # Cached API docs
-└── LICENSE             # MIT License
+├── README.md           # 中文说明（主文档）
+├── README_EN.md        # 英文说明
+├── SKILL.md            # Skill 定义文档
+├── jd-api-fetch.sh     # 执行脚本
+├── api-docs/           # 文档缓存目录
+│   ├── INDEX.md        # API 列表索引
+│   └── *.md            # 缓存的 API 文档
+└── LICENSE             # MIT 许可证
 ```
 
-## Contributing
+## 贡献
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+欢迎提交 Pull Request！
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'Add amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 创建 Pull Request
 
-## License
+## 许可证
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[MIT License](LICENSE)
 
-## Acknowledgments
+## 致谢
 
-- Data source: [joshome.jd.com](https://joshome.jd.com) - Official JD Union Documentation API
+- 数据来源: [joshome.jd.com](https://joshome.jd.com) - 京东联盟官方文档 API
 
 ---
 
-**Author**: Claude Code Agent
-**Last Updated**: 2026-04-22
+**作者**: Claude Code Agent
+**更新日期**: 2026-04-22
