@@ -1,4 +1,4 @@
-# JD Union API 文档获取技能
+# JD联盟API 文档.SKILL
 
 > 从京东联盟官方数据源 (joshome.jd.com) 获取 API 文档并生成层级字段表格
 
@@ -9,6 +9,7 @@
 本工具可自动从京东官方 `joshome.jd.com` 获取京东联盟 API 文档，解析 JSON 响应并生成带有层级字段表格的 Markdown 文档。
 
 **核心特性**:
+
 - 🔗 直接访问官方 JD 文档 API
 - 🎯 触发词自动激活
 - 📁 文档缓存到本地目录
