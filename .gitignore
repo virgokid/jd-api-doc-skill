@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Temporary files
+*.json
+.*.json
+*.txt
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Old examples (now using api-docs)
+examples/
