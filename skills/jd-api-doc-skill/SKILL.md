@@ -1,3 +1,9 @@
+---
+name: jd-api-doc-skill
+description: 京东联盟API文档获取技能 - 从官方数据源获取API文档并生成层级字段表格，支持触发词自动激活、语义映射、SDK工作流集成
+origin: virgokid
+---
+
 # jd-api-doc-skill
 
 > Fetch API documentation from JD Union official source (joshome.jd.com) and generate hierarchical field tables
