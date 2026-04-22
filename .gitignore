@@ -5,6 +5,7 @@ node_modules/
 *.json
 !.claude-plugin/*.json
 !skill.json
+!evals/*.json
 .*.json
 *.txt
 *.log

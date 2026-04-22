@@ -1,0 +1,102 @@
+[
+  {
+    "query": "京东联盟有什么接口",
+    "should_trigger": true
+  },
+  {
+    "query": "京东联盟API文档",
+    "should_trigger": true
+  },
+  {
+    "query": "jd.union.open.goods.query 怎么用",
+    "should_trigger": true
+  },
+  {
+    "query": "京东联盟转链怎么转",
+    "should_trigger": true
+  },
+  {
+    "query": "写一个京东商品查询接口，搜索蓝牙耳机",
+    "should_trigger": true
+  },
+  {
+    "query": "对接京东的精选接口",
+    "should_trigger": true
+  },
+  {
+    "query": "获取京东热销榜商品",
+    "should_trigger": true
+  },
+  {
+    "query": "查询京东推广订单",
+    "should_trigger": true
+  },
+  {
+    "query": "创建京东礼金",
+    "should_trigger": true
+  },
+  {
+    "query": "京粉精选商品怎么获取",
+    "should_trigger": true
+  },
+  {
+    "query": "jd.union.open.order.row.query 接口参数",
+    "should_trigger": true
+  },
+  {
+    "query": "京东联盟商品详情查询",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我看看京东联盟的转链接口",
+    "should_trigger": true
+  },
+  {
+    "query": "京东API怎么调用",
+    "should_trigger": true
+  },
+  {
+    "query": "京东联盟优惠券接口",
+    "should_trigger": true
+  },
+  {
+    "query": "写一个斐波那契数列",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我创建一个 React 组件",
+    "should_trigger": false
+  },
+  {
+    "query": "Python 如何读取文件",
+    "should_trigger": false
+  },
+  {
+    "query": "淘宝联盟接口文档",
+    "should_trigger": false
+  },
+  {
+    "query": "拼多多API怎么调用",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我优化这段 SQL 查询",
+    "should_trigger": false
+  },
+  {
+    "query": "如何配置 Docker",
+    "should_trigger": false
+  },
+  {
+    "query": "Git 怎么回滚提交",
+    "should_trigger": false
+  },
+  {
+    "query": "京东商城怎么下单",
+    "should_trigger": false
+  },
+  {
+    "query": "京东快递查询",
+    "should_trigger": false
+  }
+]

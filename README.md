@@ -81,6 +81,10 @@ claude plugin marketplace add https://github.com/virgokid/jd-api-doc-skill
 
 # 安装插件
 claude plugin install jd-api-doc-skill
+
+# 验证安装（重启 Claude Code 后）
+# 在对话中输入：京东联盟有什么接口
+# 应自动触发此技能并返回接口列表
 ```
 
 ### 方式二：手动安装
@@ -91,6 +95,10 @@ git clone https://github.com/virgokid/jd-api-doc-skill.git
 
 # 复制到 Claude skills 目录（整个目录结构）
 cp -r jd-api-doc-skill/.claude ~/.claude/
+
+# 验证安装
+# 检查文件是否存在
+ls ~/.claude/skills/jd-api-doc-skill/SKILL.md
 ```
 
 安装后，当你提到以下关键词时技能会自动激活：
@@ -231,6 +239,33 @@ jd-api-doc-skill/
 ## 许可证
 
 [MIT License](LICENSE)
+
+## 兼容性
+
+### 支持的平台
+
+| 平台 | 状态 | 说明 |
+|------|------|------|
+| Claude Code | ✅ 完全支持 | 主要支持平台 |
+| Cursor | ✅ 支持 | 通过 skill.json |
+| Windsurf | ✅ 支持 | 通过 skill.json |
+| GitHub Copilot | ✅ 支持 | 通过 skill.json |
+| Gemini CLI | ✅ 支持 | 通过 skill.json |
+
+### 与其他插件的兼容性
+
+本插件与以下插件/系统兼容，不会产生冲突：
+
+- ✅ **OpenClaw** - 使用不同的插件格式，可同时安装
+- ✅ **superpowers** - 功能互补，无冲突
+- ✅ **claude-mem** - 内存系统，可同时使用
+- ✅ **其他 Claude Code 插件** - 标准格式，无冲突
+
+### 已知限制
+
+- 触发词仅支持中文和英文关键词
+- 需要网络连接访问 `joshome.jd.com` 获取最新文档
+- 缓存文档存放在 `api-docs/` 目录
 
 ## 致谢
 
