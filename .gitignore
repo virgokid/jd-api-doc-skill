@@ -4,6 +4,7 @@ node_modules/
 # Temporary files
 *.json
 !.claude-plugin/*.json
+!skill.json
 .*.json
 *.txt
 *.log

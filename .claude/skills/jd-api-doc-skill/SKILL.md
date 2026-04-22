@@ -1,58 +1,11 @@
 ---
 name: jd-api-doc-skill
-description: 京东联盟API文档获取技能。当用户提到"京东联盟"、"jd.union"、"京东API"、"京东接口"、或任何京东联盟API名称（如jd.union.open.goods.query）时，必须使用此技能。当用户提到"转链"、"商品查询"、"精选"、"热销榜"、"订单查询"、"礼金"、"京粉"等京东联盟相关功能关键词时，也必须使用此技能。即使问题看似简单，也应先调用此技能获取准确的API文档信息。
-origin: virgokid
-version: 1.1.0
-triggers:
-  exact:
-    - jd.union.open.goods.query
-    - jd.union.open.goods.rank.query
-    - jd.union.open.goods.jingfen.query
-    - jd.union.open.order.row.query
-    - jd.union.open.promotion.bysubunionid.get
-    - jd.union.open.coupon.gift.get
-    - josCmsApiId
-  semantic:
-    - pattern: 转链|推广链接
-      api: promotion.bysubunionid.get
-    - pattern: 商品查询|搜索商品|商品搜索
-      api: goods.query
-    - pattern: 精选|京粉|优质商品
-      api: goods.jingfen.query
-    - pattern: 热销榜|排行榜|热卖
-      api: goods.rank.query
-    - pattern: 订单查询|订单|佣金查询
-      api: order.row.query
-    - pattern: 礼金|红包|京享礼金
-      api: coupon.gift.get
-    - pattern: 商品详情|SKU详情
-      api: goods.promotiongoodsinfo.query
-    - pattern: 类目|分类
-      api: category.goods.get
-    - pattern: 推广位|PID
-      api: position.query
-  general:
-    - 京东联盟接口
-    - 京东联盟有什么接口
-    - 京东API文档
-    - 京东联盟文档
-    - 京东联盟API
-  prefix:
-    - 京东联盟
-    - jd.union
-    - 京东API
-    - 京东接口
-priority: 100
-autoInvoke: true
+description: Fetch JD Union (京东联盟) API documentation from official source. Use this skill whenever the user mentions "京东联盟", "jd.union", "京东API", "京东接口", or any JD Union API name like jd.union.open.goods.query. Also use when user asks about "转链", "商品查询", "精选", "热销榜", "订单查询", "礼金", "京粉" - even if they don't explicitly mention JD Union, these are JD Union specific features. Always prefer this skill over general knowledge when JD Union APIs are involved.
 ---
 
-# jd-api-doc-skill
+# JD Union API Documentation Skill
 
-> **自动触发**: 当用户输入包含 "京东联盟"、"jd.union"、"京东API"、"京东接口" 或语义关键词时，自动激活此技能
-
-> Fetch API documentation from JD Union official source (joshome.jd.com) and generate hierarchical field tables
-
----
+> 从京东联盟官方数据源 (joshome.jd.com) 获取 API 文档并生成层级字段表格
 
 ## 触发词 (Trigger Words)
 
@@ -78,9 +31,6 @@ autoInvoke: true
 | `热销榜` / `排行榜` / `热卖` | `goods.rank.query` | "获取热销榜商品" |
 | `订单查询` / `订单` / `佣金查询` | `order.row.query` | "查询推广订单" |
 | `礼金` / `红包` / `京享礼金` | `coupon.gift.get` | "创建礼金" |
-| `商品详情` / `SKU详情` | `goods.promotiongoodsinfo.query` | "获取商品详情" |
-| `类目` / `分类` | `category.goods.get` | "查询商品类目" |
-| `推广位` / `PID` | `position.query` | "查询推广位" |
 
 ### 泛化触发词（列出所有接口）
 

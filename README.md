@@ -73,7 +73,7 @@
 
 ### 安装
 
-**方式一：通过 Claude Code Plugin 安装（推荐）**
+### 方式一：通过 Claude Code Plugin 安装（推荐）
 
 ```bash
 # 添加插件仓库
@@ -81,17 +81,16 @@ claude plugin marketplace add https://github.com/virgokid/jd-api-doc-skill
 
 # 安装插件
 claude plugin install jd-api-doc-skill
-
-# 启用插件
-claude plugin enable jd-api-doc-skill
 ```
 
-**方式二：手动安装**
+### 方式二：手动安装
 
 ```bash
-# 克隆并复制到 Claude Code skills 目录
+# 克隆仓库
 git clone https://github.com/virgokid/jd-api-doc-skill.git
-cp -r jd-api-doc-skill ~/.claude/skills/
+
+# 复制到 Claude skills 目录（整个目录结构）
+cp -r jd-api-doc-skill/.claude ~/.claude/
 ```
 
 安装后，当你提到以下关键词时技能会自动激活：
@@ -153,7 +152,7 @@ api-docs/
 
 ## 详细文档
 
-参见 [SKILL.md](./SKILL.md) 获取完整文档，包括：
+参见 [.claude/skills/jd-api-doc-skill/SKILL.md](./.claude/skills/jd-api-doc-skill/SKILL.md) 获取完整文档，包括：
 - 触发词映射
 - 工作流集成钩子
 - Agent API 接口
@@ -184,17 +183,21 @@ api-docs/
 ```
 jd-api-doc-skill/
 ├── .claude-plugin/
-│   ├── plugin.json         # 插件配置（含触发器）
+│   ├── plugin.json         # 插件配置
 │   └── marketplace.json    # 市场配置
-├── skills/
-│   └── jd-api-doc-skill/
-│       └── SKILL.md        # Skill 定义文档
+├── .claude/
+│   └── skills/
+│       └── jd-api-doc-skill/
+│           └── SKILL.md    # Skill 定义文档（含 YAML frontmatter）
+├── skill.json              # Skill 元数据（多平台支持）
 ├── README.md               # 中文说明（主文档）
 ├── README_EN.md            # 英文说明
 ├── jd-api-fetch.sh         # 执行脚本
 ├── api-docs/               # 文档缓存目录
 │   ├── INDEX.md            # API 列表索引
 │   └── *.md                # 缓存的 API 文档
+├── evals/                  # 评估配置
+│   └── trigger-eval.json   # 触发词评估
 └── LICENSE                 # MIT 许可证
 ```
 
@@ -209,6 +212,12 @@ jd-api-doc-skill/
 5. 创建 Pull Request
 
 ## 更新日志
+
+### v1.2.0 (2026-04-22)
+- 📁 重构项目结构，符合标准 Claude skill 格式
+- 📝 添加 YAML frontmatter 到 SKILL.md
+- 📦 添加根目录 skill.json 支持多平台
+- 🧹 清理旧目录结构
 
 ### v1.1.0 (2026-04-22)
 - ✨ 新增 `triggers` 配置，支持精确/语义/泛化/前缀四种触发规则

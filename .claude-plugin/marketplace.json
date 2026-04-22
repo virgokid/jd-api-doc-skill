@@ -1,66 +1,34 @@
 {
   "name": "jd-api-doc-skill",
+  "id": "jd-api-doc-skill",
   "owner": {
     "name": "virgokid",
     "email": "virgokid@gmail.com"
   },
   "metadata": {
-    "description": "JD Union API Documentation Skill - Fetch API docs and generate hierarchical Markdown tables",
-    "version": "1.1.0",
-    "triggers": {
-      "exact": [
-        "jd.union.open.goods.query",
-        "jd.union.open.goods.rank.query",
-        "jd.union.open.goods.jingfen.query",
-        "jd.union.open.order.row.query",
-        "jd.union.open.promotion.bysubunionid.get",
-        "jd.union.open.coupon.gift.get"
-      ],
-      "semantic": [
-        "转链",
-        "商品查询",
-        "精选",
-        "热销榜",
-        "订单查询",
-        "礼金"
-      ],
-      "general": [
-        "京东联盟接口",
-        "京东联盟有什么接口",
-        "京东API文档"
-      ],
-      "prefix": [
-        "京东联盟",
-        "jd.union",
-        "京东API"
-      ]
-    }
+    "description": "JD Union API Documentation Skill - Fetch API docs from joshome.jd.com and provide accurate parameter/usage information",
+    "version": "1.2.0",
+    "category": "api-documentation"
   },
   "plugins": [
     {
       "name": "jd-api-doc-skill",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/virgokid/jd-api-doc-skill.git"
-      },
+      "source": "./",
       "description": "京东联盟API文档获取技能 - 从官方数据源获取API文档并生成层级字段表格。支持触发词自动激活、语义映射、SDK工作流集成。",
-      "version": "1.1.0",
-      "strict": true,
-      "autoTrigger": {
-        "enabled": true,
-        "patterns": [
-          "京东联盟",
-          "jd\\.union",
-          "京东API",
-          "京东接口",
-          "转链",
-          "商品查询",
-          "热销榜",
-          "礼金",
-          "京粉精选"
-        ],
-        "priority": 100
-      }
+      "version": "1.2.0",
+      "author": {
+        "name": "virgokid"
+      },
+      "keywords": [
+        "jd",
+        "union",
+        "api",
+        "documentation",
+        "chinese",
+        "ecommerce"
+      ],
+      "category": "api-documentation",
+      "strict": false
     }
   ]
 }

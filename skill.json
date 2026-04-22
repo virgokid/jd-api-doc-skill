@@ -1,0 +1,28 @@
+{
+  "name": "jd-api-doc-skill",
+  "displayName": "JD Union API Doc",
+  "description": "Fetch JD Union (京东联盟) API documentation from official source. Supports 商品查询, 转链, 精选, 热销榜, 订单查询, 礼金.",
+  "version": "1.2.0",
+  "author": "virgokid",
+  "license": "MIT",
+  "homepage": "https://github.com/virgokid/jd-api-doc-skill",
+  "repository": "https://github.com/virgokid/jd-api-doc-skill",
+  "keywords": [
+    "jd",
+    "union",
+    "api",
+    "documentation",
+    "chinese",
+    "ecommerce",
+    "affiliate"
+  ],
+  "platforms": [
+    "claude",
+    "cursor",
+    "windsurf",
+    "copilot",
+    "kiro",
+    "roocode",
+    "gemini"
+  ]
+}
