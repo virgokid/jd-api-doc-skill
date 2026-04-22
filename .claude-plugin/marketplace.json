@@ -1,0 +1,37 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "jd-api-doc-skill",
+  "description": "JD Union API Documentation Skill - Fetch API documentation from joshome.jd.com and generate hierarchical Markdown tables with trigger word activation",
+  "owner": {
+    "name": "virgokid",
+    "email": "virgokid@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "jd-api-doc-skill",
+      "description": "京东联盟API文档获取技能 - 从官方数据源获取API文档并生成层级字段表格。支持触发词自动激活、语义映射、SDK工作流集成。",
+      "category": "development",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/virgokid/jd-api-doc-skill.git",
+        "sha": "main"
+      },
+      "homepage": "https://github.com/virgokid/jd-api-doc-skill",
+      "author": {
+        "name": "virgokid",
+        "email": "virgokid@gmail.com"
+      },
+      "keywords": ["jd", "union", "api", "documentation", "chinese", "ecommerce"],
+      "triggers": [
+        "京东联盟接口",
+        "京东API文档",
+        "jd.union.open",
+        "josCmsApiId",
+        "商品查询",
+        "转链",
+        "精选",
+        "订单查询"
+      ]
+    }
+  ]
+}
