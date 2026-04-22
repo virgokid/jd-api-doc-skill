@@ -263,9 +263,10 @@ Agent 执行流程:
 
 ## 文档缓存目录
 
-所有获取的文档存放在 `api-docs/` 目录：
+所有获取的文档存放在 **skill 所在目录** 的 `api-docs/` 子目录：
 
 ```
+# 缓存位置（相对于 skill 目录）
 api-docs/
 ├── INDEX.md                    # API 列表索引（自动生成）
 ├── jd.union.open.goods.query.md
@@ -273,6 +274,12 @@ api-docs/
 ├── jd.union.open.order.row.query.md
 └── ...
 ```
+
+**缓存路径优先级**：
+1. 环境变量 `JD_API_DOCS_DIR`（如果设置）
+2. 默认：`{skill_directory}/api-docs/`
+
+这意味着无论从哪个工作目录调用脚本，缓存都会存储在 skill 所在目录。
 
 ---
 

@@ -150,13 +150,23 @@ chmod +x jd-api-fetch.sh
 
 ## 文档目录
 
+缓存文档存储在 **skill 所在目录** 的 `api-docs/` 子目录：
+
 ```
-api-docs/
-├── INDEX.md                    # API 列表索引
-├── jd.union.open.goods.query.md
-├── jd.union.open.goods.rank.query.md
+# 无论从哪个目录调用，缓存都在 skill 目录下
+{skill-directory}/
+├── api-docs/
+│   ├── INDEX.md                    # API 列表索引
+│   ├── jd.union.open.goods.query.md
+│   ├── jd.union.open.goods.rank.query.md
+│   └── ...
+├── jd-api-fetch.sh
 └── ...
 ```
+
+**缓存路径优先级**：
+1. 环境变量 `JD_API_DOCS_DIR`（如果设置）
+2. 默认：`{skill_directory}/api-docs/`
 
 ## 详细文档
 

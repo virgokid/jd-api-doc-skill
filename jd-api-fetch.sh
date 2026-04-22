@@ -15,8 +15,11 @@
 
 set -e
 
-# Default output directory
-OUTPUT_DIR="${JD_API_DOCS_DIR:-./api-docs}"
+# Get the directory where this script is located (skill directory)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Default output directory - use skill directory unless overridden
+OUTPUT_DIR="${JD_API_DOCS_DIR:-${SCRIPT_DIR}/api-docs}"
 mkdir -p "${OUTPUT_DIR}"
 
 # API name to josCmsApiId mapping
@@ -48,9 +51,18 @@ generate_index() {
 
   curl -s "https://joshome.jd.com/classification/list?id=550" > "${TEMP_LIST}"
 
+  # Export OUTPUT_DIR for Node.js script
+  export JD_OUTPUT_DIR="${OUTPUT_DIR}"
+
   node << 'INDEX_SCRIPT'
 const fs = require('fs');
-const data = JSON.parse(fs.readFileSync('./api-docs/.api-list.json', 'utf8'));
+const path = require('path');
+
+const OUTPUT_DIR = process.env.JD_OUTPUT_DIR || './api-docs';
+const tempFile = path.join(OUTPUT_DIR, '.api-list.json');
+const indexFile = path.join(OUTPUT_DIR, 'INDEX.md');
+
+const data = JSON.parse(fs.readFileSync(tempFile, 'utf8'));
 
 const today = new Date().toISOString().split('T')[0];
 
@@ -66,7 +78,7 @@ apis.forEach(api => {
   const id = api.josCmsApiId || '-';
 
   // Check if doc exists
-  const docFile = './api-docs/' + apiName + '.md';
+  const docFile = path.join(OUTPUT_DIR, apiName + '.md');
   const exists = fs.existsSync(docFile);
   const status = exists ? '✅ 已获取' : '⬜ 未获取';
 
@@ -77,8 +89,8 @@ markdown += '\n---\n\n';
 markdown += '*总计: ' + apis.length + ' 个接口*\n';
 markdown += '*更新时间: ' + today + '*\n';
 
-fs.writeFileSync('./api-docs/INDEX.md', markdown);
-console.log('Generated: api-docs/INDEX.md');
+fs.writeFileSync(indexFile, markdown);
+console.log('Generated:', indexFile);
 console.log('Total APIs:', apis.length);
 INDEX_SCRIPT
 
@@ -147,17 +159,22 @@ echo "==> Fetching API documentation (josCmsApiId: ${API_ID})..."
 curl -s "https://joshome.jd.com/api/detail?id=${API_ID}" > "${TEMP_FILE}"
 
 echo "==> Parsing field structure..."
-cd "${OUTPUT_DIR}"
 
+# Export variables for Node.js script
 export JD_API_ID="${API_ID}"
 export JD_OUTPUT_NAME="${OUTPUT_NAME}"
+export JD_OUTPUT_DIR="${OUTPUT_DIR}"
 
 node << 'PARSE_SCRIPT'
 const fs = require('fs');
+const path = require('path');
 
 const API_ID = process.env.JD_API_ID;
 const OUTPUT_NAME = process.env.JD_OUTPUT_NAME;
-const tempFile = '.' + OUTPUT_NAME + '-raw.json';
+const OUTPUT_DIR = process.env.JD_OUTPUT_DIR || './api-docs';
+
+const tempFile = path.join(OUTPUT_DIR, '.' + OUTPUT_NAME + '-raw.json');
+const outputFile = path.join(OUTPUT_DIR, OUTPUT_NAME + '.md');
 
 const data = JSON.parse(fs.readFileSync(tempFile, 'utf8'));
 const api = data.data.josCmsApi;
@@ -258,7 +275,7 @@ const markdown = '# ' + apiName + ' - ' + znName + '\n\n' +
   '*字段数量：请求 ' + reqCount + ' 个，响应 ' + respCount + ' 个*\n' +
   '*更新时间：' + today + '*\n';
 
-fs.writeFileSync(OUTPUT_NAME + '.md', markdown);
+fs.writeFileSync(outputFile, markdown);
 
 console.log('');
 console.log('API 名称:', apiName);
@@ -267,7 +284,7 @@ console.log('');
 console.log('请求字段:', reqCount, '个');
 console.log('响应字段:', respCount, '个');
 console.log('');
-console.log('生成文件:', OUTPUT_NAME + '.md');
+console.log('生成文件:', outputFile);
 PARSE_SCRIPT
 
 echo ""
